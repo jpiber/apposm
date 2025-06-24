@@ -170,27 +170,24 @@
       e.preventDefault();
 
       const data = {
-        tecnico: form.tecnico.value,
-        jogador: form.jogador.value,
-        data: form.data.value,
-        idade: form.idade.value,
-        valor: form.valor.value,
-        unidade: form.unidade.value
+        TECNICO: form.tecnico.value,
+        JOGADOR: form.jogador.value,
+        DATA: form.data.value,
+        IDADE: form.idade.value,
+        VALOR: form.valor.value,
+        UNIDADE: form.unidade.value
       };
 
-      // Transforma em x-www-form-urlencoded
-      const formData = new URLSearchParams(data).toString();
-
-      fetch('https://script.google.com/macros/s/AKfycbwygy2O6kVLQbPHLmGZkEr973oA8Vo2JwbywaOsUWPvsmtmNV392gD_8vke0LXwm4pW8g/exec', {
+      fetch('https://sheetdb.io/api/v1/09ji0f88q4od4', {
         method: 'POST',
-        body: formData,
         headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        }
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ data: [data] })
       })
-      .then(response => response.text())
+      .then(response => response.json())
       .then(result => {
-        if(result.trim() === 'OK') {
+        if(result.created) {
           successMsg.classList.add('active');
           form.reset();
           setTimeout(() => {
