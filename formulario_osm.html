@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Formulário OSM</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background-image: url('https://images.pexels.com/photos/47730/the-ball-stadion-football-the-pitch-47730.jpeg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+    body::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: -1;
+    }
+    .form-container {
+      background: #fff;
+      padding: 32px 36px 28px 36px;
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+      width: 100%;
+      max-width: 370px;
+      animation: fadeIn 1s;
+      position: relative;
+      z-index: 1;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .form-container h2 {
+      text-align: center;
+      margin-bottom: 28px;
+      color: #007bff;
+      letter-spacing: 1px;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 500;
+      color: #222;
+    }
+    input[type="text"],
+    input[type="date"],
+    input[type="number"],
+    select {
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 18px;
+      border: 1.5px solid #e0e0e0;
+      border-radius: 6px;
+      box-sizing: border-box;
+      font-size: 15px;
+      transition: border 0.2s, box-shadow 0.2s;
+      background: #fafbfc;
+    }
+    input:focus, select:focus {
+      border: 1.5px solid #007bff;
+      outline: none;
+      box-shadow: 0 0 0 2px #007bff22;
+      background: #fff;
+    }
+    .valor-row {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+    .valor-row input {
+      flex: 2;
+      margin-bottom: 0;
+    }
+    .valor-row select {
+      flex: 1;
+      margin-bottom: 0;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(90deg, #007bff 60%, #00c6ff 100%);
+      color: #fff;
+      border: none;
+      border-radius: 6px;
+      font-size: 17px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      box-shadow: 0 2px 8px #007bff22;
+      letter-spacing: 0.5px;
+    }
+    button:hover {
+      background: linear-gradient(90deg, #0056b3 60%, #00aaff 100%);
+      transform: translateY(-2px) scale(1.03);
+    }
+    .success-message {
+      display: none;
+      position: absolute;
+      top: -38px;
+      left: 0;
+      width: 100%;
+      background: #28a745;
+      color: #fff;
+      padding: 10px 0;
+      border-radius: 6px 6px 0 0;
+      text-align: center;
+      font-size: 15px;
+      animation: fadeIn 0.7s;
+      z-index: 2;
+    }
+    .success-message.active {
+      display: block;
+    }
+    @media (max-width: 500px) {
+      .form-container {
+        padding: 18px 6vw 18px 6vw;
+        max-width: 98vw;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <div class="success-message" id="successMsg">Cadastro realizado com sucesso!</div>
+    <h2>Cadastro Transferências</h2>
+    <form id="osmForm" autocomplete="off">
+      <label for="tecnico">Técnico:</label>
+      <input type="text" id="tecnico" name="tecnico" required placeholder="Nome do técnico">
+
+      <label for="jogador">Jogador:</label>
+      <input type="text" id="jogador" name="jogador" required placeholder="Nome do jogador">
+
+      <label for="data">Data:</label>
+      <input type="date" id="data" name="data" required>
+
+      <label for="idade">Idade:</label>
+      <input type="number" id="idade" name="idade" min="10" max="50" required placeholder="Ex: 22">
+
+      <label for="valor">Valor:</label>
+      <div class="valor-row">
+        <input type="number" id="valor" name="valor" step="0.01" required placeholder="Ex: 5.5">
+        <select id="unidade" name="unidade">
+          <option value="milhoes">milhões</option>
+          <option value="mil">mil</option>
+        </select>
+      </div>
+
+      <button type="submit">Enviar</button>
+    </form>
+  </div>
+  <script>
+    const form = document.getElementById('osmForm');
+    const successMsg = document.getElementById('successMsg');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const data = {
+        tecnico: form.tecnico.value,
+        jogador: form.jogador.value,
+        data: form.data.value,
+        idade: form.idade.value,
+        valor: form.valor.value,
+        unidade: form.unidade.value
+      };
+
+      fetch('https://script.google.com/macros/s/AKfycbyu2p3cYamOk9X6V690SHCIbOq5_mjx57N3Yl--le6ztTfttCe411U1S7vRLxh-WdyN/exec', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+      .then(response => response.json())
+      .then(result => {
+        if(result.result === 'success') {
+          successMsg.classList.add('active');
+          form.reset();
+          setTimeout(() => {
+            successMsg.classList.remove('active');
+          }, 2200);
+        }
+      });
+    });
+  </script>
+</body>
+</html> 
