@@ -160,6 +160,9 @@
         </select>
       </div>
 
+      <label for="over">Over:</label>
+      <input type="text" id="over" name="over" required placeholder="Ex: 85">
+
       <button type="submit">Enviar</button>
     </form>
   </div>
@@ -175,7 +178,8 @@
         DATA: form.data.value,
         IDADE: form.idade.value,
         VALOR: form.valor.value,
-        UNIDADE: form.unidade.value
+        UNIDADE: form.unidade.value,
+        OVER: form.over.value
       };
 
       fetch('https://sheetdb.io/api/v1/09ji0f88q4od4', {
