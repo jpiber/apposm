@@ -140,8 +140,8 @@
     <div class="success-message" id="successMsg">Cadastro realizado com sucesso!</div>
     <h2>Cadastro Transferências</h2>
     <form id="osmForm" autocomplete="off">
-      <label for="tecnico">Técnico:</label>
-      <input type="text" id="tecnico" name="tecnico" required placeholder="Nome do técnico">
+      <label for="time">Time:</label>
+      <input type="tel" id="time" name="time" required placeholder="Nome do time">
 
       <label for="jogador">Jogador:</label>
       <input type="text" id="jogador" name="jogador" required placeholder="Nome do jogador">
@@ -178,7 +178,7 @@
       let dataIso = dataBr.replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1');
 
       const data = {
-        TECNICO: form.tecnico.value,
+        TIME: form.time.value,
         JOGADOR: form.jogador.value,
         DATA: dataIso,
         IDADE: form.idade.value,
