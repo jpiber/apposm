@@ -172,10 +172,14 @@
     form.addEventListener('submit', function(e) {
       e.preventDefault();
 
+      // Conversão da data para o formato aaaa-mm-dd
+      let dataBr = form.data.value;
+      let dataIso = dataBr.replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$3-$2-$1');
+
       const data = {
         TECNICO: form.tecnico.value,
         JOGADOR: form.jogador.value,
-        DATA: form.data.value,
+        DATA: dataIso,
         IDADE: form.idade.value,
         VALOR: form.valor.value,
         UNIDADE: form.unidade.value,
