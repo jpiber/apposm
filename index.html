@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8">
@@ -57,7 +57,6 @@
       color: #222;
     }
     input[type="text"],
-    input[type="date"],
     input[type="number"],
     input[type="tel"],
     select {
@@ -158,6 +157,9 @@
         </select>
       </div>
 
+      <label for="over">Over:</label>
+      <input type="tel" id="over" name="over" required placeholder="Ex: 85">
+
       <button type="submit">Enviar</button>
     </form>
   </div>
@@ -172,7 +174,8 @@
         JOGADOR: form.jogador.value,
         IDADE: form.idade.value,
         VALOR: form.valor.value,
-        UNIDADE: form.unidade.value
+        UNIDADE: form.unidade.value,
+        OVER: form.over.value
       };
 
       fetch('https://sheetdb.io/api/v1/09ji0f88q4od4', {
@@ -198,8 +201,6 @@
         alert('Erro ao enviar! Tente novamente.');
       });
     });
-
-
   </script>
 </body>
-</html> 
+</html>
